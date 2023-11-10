@@ -57,10 +57,21 @@ const Carousel = () => {
               disabled={currentSlide == 0}
               sx={{
                 border: `2px solid ${workingBlack}`,
+                opacity: currentSlide === 0 ? 0.5 : 1,
               }}
             >
-              <NorthIcon sx={{ display: { xs: "none", md: "flex" } }} />
-              <WestIcon sx={{ display: { xs: "flex", md: "none" } }} />
+              <NorthIcon
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  color: workingBlack,
+                }}
+              />
+              <WestIcon
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  color: workingBlack,
+                }}
+              />
             </IconButton>
             <IconButton
               onClick={() => {
@@ -71,10 +82,21 @@ const Carousel = () => {
               disabled={currentSlide == demos.length - 1}
               sx={{
                 border: `2px solid ${workingBlack}`,
+                opacity: currentSlide === demos.length - 1 ? 0.5 : 1,
               }}
             >
-              <SouthIcon sx={{ display: { xs: "none", md: "flex" } }} />
-              <EastIcon sx={{ display: { xs: "flex", md: "none" } }} />
+              <SouthIcon
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  color: workingBlack,
+                }}
+              />
+              <EastIcon
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  color: workingBlack,
+                }}
+              />
             </IconButton>
           </Stack>
         </Stack>
@@ -134,31 +156,57 @@ const Carousel = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack direction={{ xs: "column", lg: "row" }} gap={3}>
-        <Typography color={workingBlack} fontSize={H3}>
+      <Stack
+        direction={{ xs: "column", lg: "row" }}
+        gap={3}
+        mt={6}
+        alignItems={"center"}
+      >
+        <Typography color={workingBlack} fontSize={H3} mb={{ xs: 4, md: 0 }}>
           OUR CAPABILITIES
         </Typography>
 
-        <Stepper
-          activeStep={currentSlide}
-          sx={{ flexGrow: 1, alignItems: "center" }}
-          nonLinear
-        >
+        <Stack direction={"row"} alignItems={"center"} flexGrow={1}>
+          <Divider
+            sx={{
+              borderTop: "2px solid #000",
+              minWidth: "80px",
+              flexGrow: 1,
+            }}
+          />
           {demos.map((each, index) => (
-            <Step key={index} sx={{ border: "2px solid #000" }}>
-              <Stack
-                sx={{
-                  opacity: index === currentSlide ? 1 : 0.5,
-                }}
-              >
-                <Typography color={workingBlack} fontWeight={700}>
+            <>
+              <Stack sx={{ opacity: currentSlide === index ? 1 : 0.5 }}>
+                <Typography
+                  position={"absolute"}
+                  mt={{ xs: -6, md: -10 }}
+                  ml={2}
+                  maxWidth={{ xs: "80px", md: "120px" }}
+                  fontWeight={600}
+                  fontSize={{ xs: "10px", md: "14px" }}
+                >
                   {each.slideName}
                 </Typography>
                 <AdjustIcon />
               </Stack>
-            </Step>
+              <Divider
+                sx={{
+                  borderTop: "2px solid #000",
+                  minWidth: "80px",
+                  flexGrow: 1,
+                }}
+              />
+            </>
           ))}
-        </Stepper>
+          <Divider
+            sx={{
+              borderTop: "2px solid #000",
+              minWidth: "80px",
+              flexGrow: 1,
+              alignSelf: "center",
+            }}
+          />
+        </Stack>
       </Stack>
     </Box>
   );

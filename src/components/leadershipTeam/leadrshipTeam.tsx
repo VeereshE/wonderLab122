@@ -11,7 +11,16 @@ import { linkColor, workingBlack } from "@/theme/palette";
 
 import Image, { StaticImageData } from "next/image";
 import demoImage from "@/components/commomImages/founding-team-demo.jpg";
-import LinedButton from "@/commonComponents/lined-buttons";
+import LinedButton from "@/commonComponents/carousel-buttons-lined";
+
+import normalImage1 from "@/components/commomImages/leadership-team-1.jpg";
+import normalImage2 from "@/components/commomImages/leadership-team-2.jpg";
+
+import invertedImage1 from "@/components/commomImages/leadership-team-1-inverted.jpg";
+import invertedImage2 from "@/components/commomImages/leadership-team-2-inverted.jpg";
+
+import personImage1 from "@/components/commomImages/leadership-team-filled-1.jpg";
+import personImage2 from "@/components/commomImages/leadership-team-filled-2.jpg";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
@@ -36,10 +45,33 @@ const Carousel = () => {
         alignItems={"center"}
         mb={4}
       >
-        <Stack direction={"row"} minWidth={"120px"}>
+        <Stack minWidth={"120px"} alignItems={"center"} gap={3}>
           <Typography fontSize={H6_4} fontWeight={700}>
             {currentSlide + 1} / {demos.length}
           </Typography>
+          <Stack
+            gap={3}
+            direction={{ xs: "row", md: "column" }}
+            justifyContent={"center"}
+          >
+            {demos.map((each, index) =>
+              currentSlide === index ? (
+                <Image
+                  src={each.normalImage}
+                  alt={each.personName}
+                  width={90}
+                  height={90}
+                />
+              ) : (
+                <Image
+                  src={each.invertedImage}
+                  alt={each.personName}
+                  width={90}
+                  height={90}
+                />
+              )
+            )}
+          </Stack>
         </Stack>
         <Stack
           direction={{ xs: "column", md: "row" }}
@@ -110,18 +142,24 @@ export default Carousel;
 
 interface slideProps {
   personImage: string | StaticImageData;
+  normalImage: string | StaticImageData;
+  invertedImage: string | StaticImageData;
   personName: string;
   details: string;
 }
 const demos: slideProps[] = [
   {
-    personImage: demoImage,
+    personImage: personImage1,
+    normalImage: normalImage1,
+    invertedImage: invertedImage1,
     personName: "Sanju Menon",
     details:
       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut",
   },
   {
-    personImage: demoImage,
+    personImage: personImage2,
+    normalImage: normalImage2,
+    invertedImage: invertedImage2,
     personName: "Rajesh Ghatge",
     details:
       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut",

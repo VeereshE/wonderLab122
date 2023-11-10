@@ -1,5 +1,5 @@
 "use client";
-import SlideButtons from "@/commonComponents/swiperButton";
+
 import {
   IconButton,
   Stack,
@@ -27,6 +27,7 @@ import AdjustIcon from "@mui/icons-material/Adjust";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
+
   return (
     <Box padding={"40px"}>
       <ReactiveBreadcrumb />
@@ -48,6 +49,7 @@ const Carousel = () => {
               borderRadius: "0 200px 200px 0",
             }}
             marginLeft={"-60px"}
+            mt={3}
             direction={{ xs: "row" }}
             flexGrow={{ xs: 1, md: 0 }}
           >
@@ -151,30 +153,56 @@ const Carousel = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack direction={{ xs: "column", lg: "row" }} gap={"30px"}>
+      <Stack direction={{ xs: "column", lg: "row" }} gap={"30px"} mt={5}>
         <Typography color={workingBlack} fontSize={H3} maxWidth={{ lg: "30%" }}>
           OUR COMPANIES & PLATFORMS
         </Typography>
-        <Stepper
-          activeStep={currentSlide}
-          sx={{ flexGrow: 1, alignItems: "center" }}
-          nonLinear
+        <Stack
+          direction={"row"}
+          alignItems={"center"}
+          flexGrow={1}
+          sx={{ overflow: "hidden" }}
         >
+          <Divider
+            sx={{
+              borderTop: "2px solid #000",
+              minWidth: "80px",
+              flexGrow: 1,
+            }}
+          />
           {demos.map((each, index) => (
-            <Step key={index}>
-              <Stack
-                sx={{
-                  opacity: index === currentSlide ? 1 : 0.5,
-                }}
-              >
-                <Typography color={workingBlack} fontWeight={700}>
+            <>
+              <Stack sx={{ opacity: currentSlide === index ? 1 : 0.5 }}>
+                <Typography
+                  position={"absolute"}
+                  mt={{ xs: -3 }}
+                  ml={2}
+                  maxWidth={{ xs: "80px", md: "120px" }}
+                  fontWeight={600}
+                  fontSize={{ xs: "10px", md: "14px" }}
+                >
                   {each.companylog}
                 </Typography>
                 <AdjustIcon />
               </Stack>
-            </Step>
+              <Divider
+                sx={{
+                  borderTop: "2px solid #000",
+                  minWidth: "80px",
+                  flexGrow: 1,
+                }}
+              />
+            </>
           ))}
-        </Stepper>
+          <Divider
+            sx={{
+              borderTop: "2px solid #000",
+              minWidth: "80px",
+              flexGrow: 1,
+              alignSelf: "center",
+            }}
+          />
+        </Stack>
       </Stack>
     </Box>
   );

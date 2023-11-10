@@ -2,20 +2,31 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { Toolbar, Stack, Drawer, Typography, Link } from "@mui/material";
+import {
+  Toolbar,
+  Stack,
+  Drawer,
+  Typography,
+  Link,
+  Dialog,
+  DialogContent,
+} from "@mui/material";
 
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 
-import logo from "../commomImages/filled-logo.svg";
+import logo from "../commomImages/W_white.svg";
 import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close";
 import { H5_1, Subtitle1 } from "@/theme/fonts";
 import { workingBlack, workingWhite } from "@/theme/palette";
 
+import Contactus from "@/components/contactus/contactus";
+
 const HeaderBar = () => {
   const [isOpenDrawer, setIsOpenDrawr] = React.useState(false);
+  const [isContactOpen, setIsContactOpen] = React.useState(false);
   return (
     <Box sx={{ flexGrow: 1, backgroundColor: workingBlack }}>
       <AppBar
@@ -32,7 +43,6 @@ const HeaderBar = () => {
         >
           <Stack
             sx={{
-              background: workingWhite,
               maxHeight: "90px",
             }}
           >
@@ -77,7 +87,16 @@ const HeaderBar = () => {
           />
           <Stack alignSelf={"center"} flexGrow={1} justifyContent={"center"}>
             {tabs.map((each, index) => (
-              <Typography variant="h5" sx={{ fontSize: H5_1 }} key={index}>
+              <Typography
+                variant="h5"
+                sx={{ fontSize: H5_1 }}
+                key={index}
+                onClick={() => {
+                  if (each.name === "CONTACT") {
+                    setIsContactOpen(true);
+                  }
+                }}
+              >
                 <Link href={each.link} underline="hover" color="inherit">
                   {each.name}
                 </Link>
@@ -104,6 +123,24 @@ const HeaderBar = () => {
           </Stack>
         </Stack>
       </Drawer>
+
+      <Dialog
+        open={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        fullWidth
+        maxWidth={"md"}
+      >
+        <DialogContent
+          sx={{
+            background: workingBlack,
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
+          <Contactus colseMethod={() => setIsContactOpen(false)} />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
@@ -112,10 +149,16 @@ export default HeaderBar;
 
 const tabs: { name: string; link: string }[] = [
   { name: "HOME", link: "/" },
-  { name: "ABOUT US", link: "#" },
+  { name: "ABOUT US", link: "/" },
   { name: "OUR COMPANIES", link: "/our-capabilities/our-companies&Platforms" },
   { name: "OUR CAPABILITIES", link: "/our-capabilities" },
-  { name: "TEAMS", link: "#" },
-  { name: "CASE STUDIES", link: "#$" },
+  {
+    name: "TEAMS",
+    link: "/our-capabilities/our-companies&Platforms/founding-team",
+  },
+  {
+    name: "CASE STUDIES",
+    link: "/our-capabilities/our-companies&Platforms/founding-team/leadership-team/case-Studeis",
+  },
   { name: "CONTACT", link: "#" },
 ];

@@ -8,10 +8,14 @@ import {
   Stepper,
   Step,
   Divider,
+  Dialog,
+  DialogContent,
+  Paper,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import React, { useState } from "react";
 
-import { Caption, H3, H6_4 } from "@/theme/fonts";
+import { Caption, H3, H5, H6_4 } from "@/theme/fonts";
 import MLink from "@/commonComponents/m-link";
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import ReactiveBreadcrumb from "@/commonComponents/breadCrumb";
@@ -21,14 +25,20 @@ import WestIcon from "@mui/icons-material/West";
 
 import { linkColor, workingBlack, workingWhite } from "@/theme/palette";
 import AdjustIcon from "@mui/icons-material/Adjust";
+import Image, { StaticImageData } from "next/image";
+
+import caseStudies1 from "@/components/commomImages/case-studies-1.jpg";
+import caseStudies2 from "@/components/commomImages/case-studies-2.jpg";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
+  const [open, setOpen] = useState(false);
+
   return (
     <Box padding={"40px"} gap={4}>
       <ReactiveBreadcrumb />
       <Stack
-        direction={{ xs: "column-reverse", md: "row" }}
+        direction={{ xs: "column", md: "row" }}
         minHeight={"70vh"}
         alignItems={"center"}
         gap={4}
@@ -58,18 +68,14 @@ const Carousel = () => {
             >
               <WestIcon sx={{ color: workingBlack }} />
             </IconButton>
-            <Stack
-              style={{
-                borderRadius: "50%",
-                border: `3px solid ${workingBlack}`,
-                padding: "30px",
-                minHeight: "200px",
-                width: "200px",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            ></Stack>
+            <Stack onClick={() => setOpen(true)}>
+              <Image
+                src={demos[currentSlide].image}
+                width={350}
+                alt=""
+                height={350}
+              />
+            </Stack>
             <IconButton
               onClick={() => {
                 if (currentSlide < demos.length - 1) {
@@ -87,57 +93,23 @@ const Carousel = () => {
           </Stack>
         </Stack>
 
-        <Stack fontSize={Caption} maxWidth={{ sm: "35%" }}>
-          <Typography color={"inherit"} fontWeight={"600"}>
-            {demos[currentSlide].subheading}
+        <Stack maxWidth={{ md: "35%" }} gap={4}>
+          <Typography color={"inherit"} fontSize={H5}>
+            {demos[currentSlide].slideName}
           </Typography>
           <Typography>{demos[currentSlide].descriptions}</Typography>
-          {demos[currentSlide].outcomes.map((eachOutCome, index) => (
-            <Typography key={index}>- {eachOutCome}</Typography>
-          ))}
-          <MLink
-            variant={"text"}
-            disableRipple
-            sx={{
-              fontWeight: "100",
-              textDecoration: "underline",
-              fontStyle: "italic",
-              color: linkColor,
-              alignSelf: "flex-start",
-            }}
-            href={"#"}
-          >
-            Read More <CallMadeIcon />
-          </MLink>
         </Stack>
       </Stack>
       <Stack direction={{ xs: "column", lg: "row" }} gap={3}>
-        <Typography color={workingBlack} fontSize={H3}>
+        <Typography
+          color={workingBlack}
+          fontSize={H3}
+          mt={{ xs: "40px", md: "0px" }}
+        >
           OUR CAPABILITIES
         </Typography>
 
-        <Stepper
-          activeStep={currentSlide}
-          sx={{ flexGrow: 1, alignItems: "center" }}
-          nonLinear
-        >
-          {demos.map((each, index) => (
-            <Step key={index}>
-              <Stack
-                sx={{
-                  opacity: index === currentSlide ? 1 : 0.5,
-                }}
-              >
-                <Typography color={workingBlack} fontWeight={700}>
-                  {each.slideName}
-                </Typography>
-                <AdjustIcon />
-              </Stack>
-            </Step>
-          ))}
-        </Stepper>
-
-        {/* <Stack direction={"row"} alignItems={"center"} flexGrow={1}>
+        <Stack direction={"row"} alignItems={"center"} flexGrow={1}>
           <Divider
             sx={{
               borderTop: "2px solid #000",
@@ -147,7 +119,10 @@ const Carousel = () => {
           />
           {demos.map((each, index) => (
             <>
-              <Stack>
+              <Stack sx={{ opacity: currentSlide === index ? 1 : 0.5 }}>
+                <Typography position={"absolute"} mt={-2} ml={4}>
+                  {each.slideName}
+                </Typography>
                 <AdjustIcon />
               </Stack>
               <Divider
@@ -164,10 +139,42 @@ const Carousel = () => {
               borderTop: "2px solid #000",
               minWidth: "80px",
               flexGrow: 1,
+              alignSelf: "center",
             }}
           />
-        </Stack> */}
+        </Stack>
       </Stack>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        fullWidth={true}
+        maxWidth={"lg"}
+        sx={{
+          background: workingBlack,
+        }}
+      >
+        <DialogContent sx={{ background: workingBlack }}>
+          <Stack gap={5}>
+            <CloseIcon
+              sx={{ color: workingWhite }}
+              fontSize="large"
+              onClick={() => {
+                setOpen(false);
+              }}
+            />
+            <iframe
+              style={{
+                minHeight: "300px",
+                maxHeight: "60vh",
+                width: "90%",
+                overflow: "hidden",
+              }}
+              src={demos[currentSlide].videoUrl}
+              title="Video Popup"
+            />
+          </Stack>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
@@ -176,43 +183,27 @@ export default Carousel;
 
 interface slideProps {
   slideName: string;
-  subheading: string;
   descriptions: string;
-  outcomes: string[];
+
+  videoUrl: string;
+  image: string | StaticImageData;
 }
 const demos: slideProps[] = [
   {
-    slideName: "Digital Video Content & Community",
-    subheading: "Full-Funnel Content Solutions",
+    slideName: "Bharat Matrimony",
+
     descriptions:
       "Bespoke solutions that combine human insights and platform-first strategy to create engaging digital experiences throughout the customer journey, cultivating loyalty and driving outcomes.",
-    outcomes: [
-      "Brand & Platform Strategy",
-      "Creative & Experience Design",
-      "Digital Content Production & Marketing Service",
-    ],
+
+    videoUrl: "https://www.youtube.com/embed/88kzxvrR22A",
+    image: caseStudies1,
   },
   {
-    slideName: "Digital Data & Media",
-    subheading: "AI driven Platform-First Digital Media Marketing",
+    slideName: "EatSure",
     descriptions:
       "AI, machine learning, and automation power our platform-first media solutions delivering personalized digital marketing programs across geographies, communities and culture",
-    outcomes: [
-      "Programmatic Marketing",
-      "AI/ML and Visualization",
-      "Platform Expertise & Media Planning",
-      " Dynamic Creative Optimization",
-    ],
-  },
-  {
-    slideName: "Digital Video Content & Community",
-    subheading: "Full-Funnel Content Solutions",
-    descriptions:
-      "Bespoke solutions that combine human insights and platform-first strategy to create engaging digital experiences throughout the customer journey, cultivating loyalty and driving outcomes.",
-    outcomes: [
-      "Brand & Platform Strategy",
-      "Creative & Experience Design",
-      "Digital Content Production & Marketing Service",
-    ],
+
+    videoUrl: "https://www.youtube.com/embed/xMOG-lzh_Zo",
+    image: caseStudies2,
   },
 ];
