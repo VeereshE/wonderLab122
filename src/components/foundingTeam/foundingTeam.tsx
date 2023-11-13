@@ -60,6 +60,7 @@ const Carousel = () => {
                   alt={each.personName}
                   width={90}
                   height={90}
+                  key={index}
                 />
               ) : (
                 <Image
@@ -67,6 +68,7 @@ const Carousel = () => {
                   alt={each.personName}
                   width={90}
                   height={90}
+                  key={index}
                 />
               )
             )}

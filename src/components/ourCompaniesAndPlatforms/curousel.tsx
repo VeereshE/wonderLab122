@@ -172,7 +172,10 @@ const Carousel = () => {
           />
           {demos.map((each, index) => (
             <>
-              <Stack sx={{ opacity: currentSlide === index ? 1 : 0.5 }}>
+              <Stack
+                sx={{ opacity: currentSlide === index ? 1 : 0.5 }}
+                key={index}
+              >
                 <Typography
                   position={"absolute"}
                   mt={{ xs: -3 }}
