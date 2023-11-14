@@ -24,20 +24,41 @@ import WestIcon from "@mui/icons-material/West";
 import { linkColor, workingBlack, workingWhite } from "@/theme/palette";
 import { StaticImageData } from "next/image";
 import AdjustIcon from "@mui/icons-material/Adjust";
+import {
+  MotionLink,
+  MotionStack,
+  MotionTypography,
+} from "@/commonComponents/motion-components";
+import { staggerChildren, staggerDiv } from "@/commonComponents/animation";
+import CarouselButton from "@/commonComponents/carousel-button";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
 
+  const changeToNext = () => {
+    if (currentSlide < demos.length - 1) {
+      setCurrentSlideNum(currentSlide + 1);
+    }
+  };
+  const changeToPrev = () => {
+    if (currentSlide > 0) {
+      setCurrentSlideNum(currentSlide - 1);
+    }
+  };
+
   return (
     <Box padding={"40px"}>
       <ReactiveBreadcrumb />
-      <Stack
+      <MotionStack
         direction={{ xs: "column", md: "row" }}
         minHeight={"70vh"}
         alignItems={"center"}
+        variants={staggerDiv}
+        initial="initial"
+        whileInView={"animate"}
       >
         <Stack direction={"row"} flexGrow={1}>
-          <Stack
+          <MotionStack
             padding={4}
             gap={{ xs: 2, md: 10 }}
             sx={{
@@ -52,15 +73,17 @@ const Carousel = () => {
             mt={3}
             direction={{ xs: "row" }}
             flexGrow={{ xs: 1, md: 0 }}
+            variants={staggerDiv}
           >
-            <Typography
+            <MotionTypography
               sx={{
                 color: workingWhite,
                 fontSize: H5,
               }}
+              variants={staggerChildren}
             >
               {demos[currentSlide].companylog}
-            </Typography>
+            </MotionTypography>
             <Divider
               orientation="vertical"
               sx={{
@@ -69,10 +92,10 @@ const Carousel = () => {
               }}
             />
             <Stack fontSize={Caption} maxWidth={"35%"}>
-              <Typography color={linkColor}>
+              <MotionTypography color={linkColor} variants={staggerChildren}>
                 {demos[currentSlide].descriptions}
-              </Typography>
-              <MLink
+              </MotionTypography>
+              <MotionLink
                 variant={"text"}
                 disableRipple
                 sx={{
@@ -83,85 +106,43 @@ const Carousel = () => {
                   alignSelf: "flex-start",
                 }}
                 href={"#"}
+                variants={staggerChildren}
               >
                 Go to Website <CallMadeIcon />
-              </MLink>
+              </MotionLink>
             </Stack>
-          </Stack>
+          </MotionStack>
         </Stack>
-        <Stack
-          textAlign={"center"}
-          sx={{
-            color: workingBlack,
-          }}
-          gap={3}
+
+        <CarouselButton
+          arrayLength={demos.length}
+          changeToNext={changeToNext}
+          changeToPrev={changeToPrev}
+          currentSlide={currentSlide}
+        />
+      </MotionStack>
+      <MotionStack
+        direction={{ xs: "column", lg: "row" }}
+        gap={"30px"}
+        mt={5}
+        variants={staggerDiv}
+        initial="initial"
+        whileInView={"animate"}
+      >
+        <MotionTypography
+          color={workingBlack}
+          fontSize={H3}
+          maxWidth={{ lg: "30%" }}
+          variants={staggerChildren}
         >
-          <Typography fontSize={Subtitle1} fontWeight={"600"}>
-            {currentSlide + 1} / {demos.length}{" "}
-          </Typography>
-          <Stack gap={3} direction={{ xs: "row", md: "column" }}>
-            <IconButton
-              onClick={() => {
-                if (currentSlide > 0) {
-                  setCurrentSlideNum(currentSlide - 1);
-                }
-              }}
-              disabled={currentSlide == 0}
-              disableRipple
-              sx={{
-                border: `2px solid ${workingBlack}`,
-              }}
-            >
-              <NorthIcon
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  color: workingBlack,
-                }}
-              />
-              <WestIcon
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                  color: workingBlack,
-                }}
-              />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                if (currentSlide < demos.length - 1) {
-                  setCurrentSlideNum(currentSlide + 1);
-                }
-              }}
-              disabled={currentSlide == demos.length - 1}
-              disableRipple
-              sx={{
-                border: `2px solid ${workingBlack}`,
-              }}
-            >
-              <SouthIcon
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  color: workingBlack,
-                }}
-              />
-              <EastIcon
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                  color: workingBlack,
-                }}
-              />
-            </IconButton>
-          </Stack>
-        </Stack>
-      </Stack>
-      <Stack direction={{ xs: "column", lg: "row" }} gap={"30px"} mt={5}>
-        <Typography color={workingBlack} fontSize={H3} maxWidth={{ lg: "30%" }}>
           OUR COMPANIES & PLATFORMS
-        </Typography>
-        <Stack
+        </MotionTypography>
+        <MotionStack
           direction={"row"}
           alignItems={"center"}
           flexGrow={1}
           sx={{ overflow: "hidden" }}
+          variants={staggerChildren}
         >
           <Divider
             sx={{
@@ -171,7 +152,7 @@ const Carousel = () => {
             }}
           />
           {demos.map((each, index) => (
-            <>
+            <React.Fragment key={index}>
               <Stack
                 sx={{ opacity: currentSlide === index ? 1 : 0.5 }}
                 key={index}
@@ -195,7 +176,7 @@ const Carousel = () => {
                   flexGrow: 1,
                 }}
               />
-            </>
+            </React.Fragment>
           ))}
           <Divider
             sx={{
@@ -205,8 +186,8 @@ const Carousel = () => {
               alignSelf: "center",
             }}
           />
-        </Stack>
-      </Stack>
+        </MotionStack>
+      </MotionStack>
     </Box>
   );
 };

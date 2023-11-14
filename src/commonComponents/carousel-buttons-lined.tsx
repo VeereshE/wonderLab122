@@ -4,6 +4,11 @@ import { IconButton, Stack, Divider } from "@mui/material";
 
 import EastIcon from "@mui/icons-material/East";
 import WestIcon from "@mui/icons-material/West";
+import { MotionStack } from "./motion-components";
+import {
+  TopToBottomtextTransition,
+  bottomToToptextTransition,
+} from "./animation";
 
 interface LinedButtonProps {
   currentSlide: number;
@@ -19,11 +24,12 @@ const LinedButton: React.FC<LinedButtonProps> = ({
   arrayLength,
 }) => {
   return (
-    <Stack
+    <MotionStack
       direction="row"
       alignItems="center"
       flexGrow={1}
       justifyContent={"center"}
+      variants={TopToBottomtextTransition}
     >
       <Divider
         sx={{
@@ -68,7 +74,7 @@ const LinedButton: React.FC<LinedButtonProps> = ({
           flexGrow: 1,
         }}
       />
-    </Stack>
+    </MotionStack>
   );
 };
 

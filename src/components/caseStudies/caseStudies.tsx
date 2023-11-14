@@ -15,9 +15,8 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useState } from "react";
 
-import { Caption, H3, H5, H6_4 } from "@/theme/fonts";
-import MLink from "@/commonComponents/m-link";
-import CallMadeIcon from "@mui/icons-material/CallMade";
+import { H3, H5, H6_4 } from "@/theme/fonts";
+
 import ReactiveBreadcrumb from "@/commonComponents/breadCrumb";
 
 import EastIcon from "@mui/icons-material/East";
@@ -29,6 +28,16 @@ import Image, { StaticImageData } from "next/image";
 
 import caseStudies1 from "@/components/commomImages/case-studies-1.jpg";
 import caseStudies2 from "@/components/commomImages/case-studies-2.jpg";
+import {
+  MotionStack,
+  MotionTypography,
+} from "@/commonComponents/motion-components";
+import {
+  TopToBottomtextTransition,
+  bottomToToptextTransition,
+  staggerDiv,
+  textStaggerChildren,
+} from "@/commonComponents/animation";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
@@ -37,12 +46,15 @@ const Carousel = () => {
   return (
     <Box padding={"40px"} gap={4}>
       <ReactiveBreadcrumb />
-      <Stack
+      <MotionStack
         direction={{ xs: "column", md: "row" }}
         minHeight={"70vh"}
         alignItems={"center"}
         gap={4}
         mt={3}
+        variants={staggerDiv}
+        initial="initial"
+        whileInView={"animate"}
       >
         <Stack
           justifyContent={"center"}
@@ -93,23 +105,39 @@ const Carousel = () => {
           </Stack>
         </Stack>
 
-        <Stack maxWidth={{ md: "35%" }} gap={4}>
+        <MotionStack
+          maxWidth={{ md: "35%" }}
+          gap={4}
+          variants={bottomToToptextTransition}
+        >
           <Typography color={"inherit"} fontSize={H5}>
             {demos[currentSlide].slideName}
           </Typography>
           <Typography>{demos[currentSlide].descriptions}</Typography>
-        </Stack>
-      </Stack>
-      <Stack direction={{ xs: "column", lg: "row" }} gap={3}>
-        <Typography
+        </MotionStack>
+      </MotionStack>
+      <MotionStack
+        direction={{ xs: "column", lg: "row" }}
+        gap={3}
+        variants={staggerDiv}
+        initial="initial"
+        whileInView={"animate"}
+      >
+        <MotionTypography
           color={workingBlack}
           fontSize={H3}
           mt={{ xs: "40px", md: "0px" }}
+          variants={textStaggerChildren}
         >
           OUR CAPABILITIES
-        </Typography>
+        </MotionTypography>
 
-        <Stack direction={"row"} alignItems={"center"} flexGrow={1}>
+        <MotionStack
+          direction={"row"}
+          alignItems={"center"}
+          flexGrow={1}
+          variants={TopToBottomtextTransition}
+        >
           <Divider
             sx={{
               borderTop: "2px solid #000",
@@ -118,7 +146,7 @@ const Carousel = () => {
             }}
           />
           {demos.map((each, index) => (
-            <>
+            <React.Fragment key={index}>
               <Stack
                 sx={{ opacity: currentSlide === index ? 1 : 0.5 }}
                 key={index}
@@ -135,7 +163,7 @@ const Carousel = () => {
                   flexGrow: 1,
                 }}
               />
-            </>
+            </React.Fragment>
           ))}
           <Divider
             sx={{
@@ -145,8 +173,8 @@ const Carousel = () => {
               alignSelf: "center",
             }}
           />
-        </Stack>
-      </Stack>
+        </MotionStack>
+      </MotionStack>
       <Dialog
         open={open}
         onClose={() => setOpen(false)}

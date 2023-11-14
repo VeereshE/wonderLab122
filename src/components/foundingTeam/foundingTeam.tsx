@@ -21,6 +21,15 @@ import invertedImage2 from "@/components/commomImages/founding-team-2-inverted.j
 
 import personImage1 from "@/components/commomImages/founding-team-outlined-1.jpg";
 import personImage2 from "@/components/commomImages/founding-team-outlined-2.jpg";
+import {
+  MotionStack,
+  MotionTypography,
+} from "@/commonComponents/motion-components";
+import {
+  staggerChildren,
+  staggerDiv,
+  textStaggerChildren,
+} from "@/commonComponents/animation";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
@@ -38,11 +47,14 @@ const Carousel = () => {
   return (
     <Box padding={"40px"}>
       <ReactiveBreadcrumb />
-      <Stack
+      <MotionStack
         direction={{ xs: "column", md: "row" }}
         gap={5}
         minHeight={"70vh"}
         alignItems={"center"}
+        variants={staggerDiv}
+        initial="initial"
+        whileInView={"animate"}
       >
         <Stack minWidth={"120px"} alignItems={"center"} gap={3}>
           <Typography fontSize={H6_4} fontWeight={700}>
@@ -74,7 +86,7 @@ const Carousel = () => {
             )}
           </Stack>
         </Stack>
-        <Stack
+        <MotionStack
           direction={{ xs: "column", md: "row" }}
           alignItems={"center"}
           flexGrow={1}
@@ -91,11 +103,12 @@ const Carousel = () => {
               height: "400px",
             }}
           />
-          <Stack
+          <MotionStack
             sx={{
               color: workingBlack,
             }}
             maxWidth={{ md: "40%" }}
+            variants={textStaggerChildren}
           >
             <Typography fontSize={H5_1}>
               {demos[currentSlide].personName}
@@ -116,17 +129,24 @@ const Carousel = () => {
             >
               Read more <CallMadeIcon />
             </MLink>
-          </Stack>
-        </Stack>
-      </Stack>
-      <Stack
+          </MotionStack>
+        </MotionStack>
+      </MotionStack>
+      <MotionStack
         direction={{ xs: "column", md: "row" }}
         alignItems={{ md: "center" }}
         gap={3}
+        variants={staggerDiv}
+        initial="initial"
+        whileInView={"animate"}
       >
-        <Typography variant="h4" fontSize={H4}>
+        <MotionTypography
+          variant="h4"
+          fontSize={H4}
+          variants={textStaggerChildren}
+        >
           FOUNDING TEAM
-        </Typography>
+        </MotionTypography>
 
         <LinedButton
           currentSlide={currentSlide}
@@ -134,7 +154,7 @@ const Carousel = () => {
           changeToPrev={changeToPrev}
           arrayLength={demos.length}
         />
-      </Stack>
+      </MotionStack>
     </Box>
   );
 };

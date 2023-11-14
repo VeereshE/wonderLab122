@@ -9,10 +9,19 @@ import MLink from "@/commonComponents/m-link";
 
 import ReactiveBreadcrumb from "@/commonComponents/breadCrumb";
 import { linkColor, workingBlack, workingWhite } from "@/theme/palette";
+import {
+  MotionLink,
+  MotionLinkProps,
+  MotionStack,
+  MotionStackProps,
+  MotionTypography,
+  MotionTypographyProps,
+  MotionVariantProps,
+} from "@/commonComponents/motion-components";
 
 const HomePage = () => {
   return (
-    <Stack
+    <MotionStack
       sx={{
         background: workingBlack,
         alignItems: "center",
@@ -27,8 +36,11 @@ const HomePage = () => {
         xs: "column",
         md: "row",
       }}
+      variants={staggerDiv}
+      initial="initial"
+      whileInView={"animate"}
     >
-      <Stack
+      <MotionStack
         maxWidth={{
           xs: "90%",
           md: "50%",
@@ -41,7 +53,7 @@ const HomePage = () => {
           md: 0,
         }}
       >
-        <Typography
+        <MotionTypography
           color={workingWhite}
           sx={{
             fontSize: H6_4,
@@ -50,21 +62,23 @@ const HomePage = () => {
               md: "60%",
             },
           }}
+          variants={staggerChildren}
         >
           THE PLATFORM-FIRST DIGITAL NETWORK
-        </Typography>
-        <Typography
+        </MotionTypography>
+        <MotionTypography
           color={workingWhite}
           sx={{
             fontSize: Subtitle1,
             maxWidth: "60%",
           }}
+          variants={staggerChildren}
         >
           Bridging the gap between marketing and digital business
           transformation.
-        </Typography>
+        </MotionTypography>
 
-        <MLink
+        <MotionLink
           variant={"text"}
           disableRipple
           sx={{
@@ -76,10 +90,11 @@ const HomePage = () => {
             alignSelf: "flex-start",
           }}
           href={"#"}
+          variants={staggerChildren}
         >
           Read More <CallMadeIcon />
-        </MLink>
-      </Stack>
+        </MotionLink>
+      </MotionStack>
       <Image
         src={logo}
         width={0}
@@ -93,8 +108,32 @@ const HomePage = () => {
           maxHeight: "380px",
         }}
       />
-    </Stack>
+    </MotionStack>
   );
 };
 
 export default HomePage;
+
+const staggerChildren: MotionVariantProps = {
+  initial: {
+    x: -100,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
+const staggerDiv: MotionVariantProps = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.4,
+      delayChildren: 1.3, // Prev value - 1
+    },
+  },
+};

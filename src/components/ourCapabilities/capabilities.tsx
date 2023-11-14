@@ -1,105 +1,60 @@
 "use client";
 
-import {
-  IconButton,
-  Stack,
-  Typography,
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Divider,
-} from "@mui/material";
+import { Stack, Typography, Box, Divider } from "@mui/material";
 import React, { useState } from "react";
 
-import { Caption, H3, H5, H5_1, Subtitle1 } from "@/theme/fonts";
+import { Caption, H3, H5_1 } from "@/theme/fonts";
 import MLink from "@/commonComponents/m-link";
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import ReactiveBreadcrumb from "@/commonComponents/breadCrumb";
 
-import NorthIcon from "@mui/icons-material/North";
-import SouthIcon from "@mui/icons-material/South";
-import EastIcon from "@mui/icons-material/East";
-import WestIcon from "@mui/icons-material/West";
-
 import { linkColor, workingBlack, workingWhite } from "@/theme/palette";
 import AdjustIcon from "@mui/icons-material/Adjust";
+import CarouselButton from "@/commonComponents/carousel-button";
+import {
+  MotionStack,
+  MotionTypography,
+} from "@/commonComponents/motion-components";
+import {
+  TopToBottomtextTransition,
+  bottomToToptextTransition,
+  staggerDiv,
+  textStaggerChildren,
+} from "@/commonComponents/animation";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
+
+  const changeToNext = () => {
+    if (currentSlide < demos.length - 1) {
+      setCurrentSlideNum(currentSlide + 1);
+    }
+  };
+  const changeToPrev = () => {
+    if (currentSlide > 0) {
+      setCurrentSlideNum(currentSlide - 1);
+    }
+  };
+
   return (
     <Box padding={"40px"} gap={4}>
       <ReactiveBreadcrumb />
-      <Stack
+      <MotionStack
         direction={{ xs: "column-reverse", md: "row" }}
         minHeight={"70vh"}
         alignItems={"center"}
         gap={4}
         mt={3}
+        variants={staggerDiv}
+        initial="initial"
+        whileInView={"animate"}
       >
-        <Stack
-          textAlign={"center"}
-          sx={{
-            color: workingBlack,
-          }}
-          gap={3}
-        >
-          <Typography fontSize={Subtitle1} fontWeight={"600"}>
-            {currentSlide + 1} / {demos.length}{" "}
-          </Typography>
-          <Stack gap={3} direction={{ xs: "row", md: "column" }}>
-            <IconButton
-              onClick={() => {
-                if (currentSlide > 0) {
-                  setCurrentSlideNum(currentSlide - 1);
-                }
-              }}
-              disabled={currentSlide == 0}
-              sx={{
-                border: `2px solid ${workingBlack}`,
-                opacity: currentSlide === 0 ? 0.5 : 1,
-              }}
-            >
-              <NorthIcon
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  color: workingBlack,
-                }}
-              />
-              <WestIcon
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                  color: workingBlack,
-                }}
-              />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                if (currentSlide < demos.length - 1) {
-                  setCurrentSlideNum(currentSlide + 1);
-                }
-              }}
-              disabled={currentSlide == demos.length - 1}
-              sx={{
-                border: `2px solid ${workingBlack}`,
-                opacity: currentSlide === demos.length - 1 ? 0.5 : 1,
-              }}
-            >
-              <SouthIcon
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  color: workingBlack,
-                }}
-              />
-              <EastIcon
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                  color: workingBlack,
-                }}
-              />
-            </IconButton>
-          </Stack>
-        </Stack>
+        <CarouselButton
+          arrayLength={demos.length}
+          changeToNext={changeToNext}
+          changeToPrev={changeToPrev}
+          currentSlide={currentSlide}
+        />
         <Stack
           direction={{ xs: "column", sm: "row" }}
           flexGrow={1}
@@ -122,16 +77,21 @@ const Carousel = () => {
               justifyContent: "center",
             }}
           >
-            <Typography
+            <MotionTypography
+              variants={textStaggerChildren}
               sx={{
                 color: workingWhite,
                 fontSize: H5_1,
               }}
             >
               {demos[currentSlide].slideName}
-            </Typography>
+            </MotionTypography>
           </Stack>
-          <Stack fontSize={Caption} maxWidth={{ sm: "35%" }}>
+          <MotionStack
+            fontSize={Caption}
+            maxWidth={{ sm: "35%" }}
+            variants={textStaggerChildren}
+          >
             <Typography color={"inherit"} fontWeight={"600"}>
               {demos[currentSlide].subheading}
             </Typography>
@@ -153,20 +113,33 @@ const Carousel = () => {
             >
               Read More <CallMadeIcon />
             </MLink>
-          </Stack>
+          </MotionStack>
         </Stack>
-      </Stack>
-      <Stack
+      </MotionStack>
+      <MotionStack
         direction={{ xs: "column", lg: "row" }}
         gap={3}
         mt={6}
         alignItems={"center"}
+        variants={staggerDiv}
+        initial={"initial"}
+        whileInView={"animate"}
       >
-        <Typography color={workingBlack} fontSize={H3} mb={{ xs: 4, md: 0 }}>
+        <MotionTypography
+          color={workingBlack}
+          fontSize={H3}
+          mb={{ xs: 4, md: 0 }}
+          variants={TopToBottomtextTransition}
+        >
           OUR CAPABILITIES
-        </Typography>
+        </MotionTypography>
 
-        <Stack direction={"row"} alignItems={"center"} flexGrow={1}>
+        <MotionStack
+          direction={"row"}
+          alignItems={"center"}
+          flexGrow={1}
+          variants={bottomToToptextTransition}
+        >
           <Divider
             sx={{
               borderTop: "2px solid #000",
@@ -175,11 +148,8 @@ const Carousel = () => {
             }}
           />
           {demos.map((each, index) => (
-            <>
-              <Stack
-                key={index}
-                sx={{ opacity: currentSlide === index ? 1 : 0.5 }}
-              >
+            <React.Fragment key={index}>
+              <Stack sx={{ opacity: currentSlide === index ? 1 : 0.5 }}>
                 <Typography
                   position={"absolute"}
                   mt={{ xs: -6, md: -10 }}
@@ -199,7 +169,7 @@ const Carousel = () => {
                   flexGrow: 1,
                 }}
               />
-            </>
+            </React.Fragment>
           ))}
           <Divider
             sx={{
@@ -209,8 +179,8 @@ const Carousel = () => {
               alignSelf: "center",
             }}
           />
-        </Stack>
-      </Stack>
+        </MotionStack>
+      </MotionStack>
     </Box>
   );
 };
@@ -259,73 +229,3 @@ const demos: slideProps[] = [
     ],
   },
 ];
-
-{
-  /* <Swiper
-  style={{
-    padding: "30px",
-  }}
->
-  {demos.map((each, index) => (
-    <SwiperSlide
-      style={{
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-      }}
-      key={index}
-    >
-      <Stack>
-        <SlideButtons
-          disableNext={false}
-          disablePrev={false}
-          variant={"primary"}
-        />
-      </Stack>
-      <Stack
-        style={{
-          borderRadius: "50%",
-          background: "#000000",
-          padding: "30px",
-          minHeight: "400px",
-          width: "400px",
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            color: "#FFFFFF",
-            fontSize: H5_1,
-          }}
-        >
-          {each.slideName}
-        </Typography>
-      </Stack>
-      <Stack>
-        <Typography color={"inherit"} fontSize={Caption} fontWeight={"600"}>
-          {each.subheading}
-        </Typography>
-        {each.outcomes.map((eachOutCome) => (
-          <Typography>- {eachOutCome}</Typography>
-        ))}
-        <MLink
-          variant={"text"}
-          disableRipple
-          sx={{
-            fontWeight: "100",
-            textDecoration: "underline",
-            fontStyle: "italic",
-            color: "#bcbcbc",
-            alignSelf: "flex-start",
-          }}
-          href={"#"}
-        >
-          Read More <CallMadeIcon />
-        </MLink>
-      </Stack>
-    </SwiperSlide>
-  ))}
-</Swiper>; */
-}

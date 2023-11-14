@@ -21,6 +21,8 @@ import invertedImage2 from "@/components/commomImages/leadership-team-2-inverted
 
 import personImage1 from "@/components/commomImages/leadership-team-filled-1.jpg";
 import personImage2 from "@/components/commomImages/leadership-team-filled-2.jpg";
+import { MotionStack } from "@/commonComponents/motion-components";
+import { staggerDiv } from "@/commonComponents/animation";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlideNum] = useState(0);
@@ -38,12 +40,13 @@ const Carousel = () => {
   return (
     <Box padding={"40px"}>
       <ReactiveBreadcrumb />
-      <Stack
+      <MotionStack
         direction={{ xs: "column", md: "row" }}
         gap={5}
         minHeight={"70vh"}
         alignItems={"center"}
         mb={4}
+        variants={staggerDiv}
       >
         <Stack minWidth={"120px"} alignItems={"center"} gap={3}>
           <Typography fontSize={H6_4} fontWeight={700}>
@@ -119,11 +122,12 @@ const Carousel = () => {
             </MLink>
           </Stack>
         </Stack>
-      </Stack>
-      <Stack
+      </MotionStack>
+      <MotionStack
         direction={{ xs: "column", md: "row" }}
         alignItems={{ md: "center" }}
         gap={3}
+        variants={staggerDiv}
       >
         <Typography variant="h4" fontSize={H4}>
           FOUNDING TEAM
@@ -135,7 +139,7 @@ const Carousel = () => {
           changeToPrev={changeToPrev}
           arrayLength={demos.length}
         />
-      </Stack>
+      </MotionStack>
     </Box>
   );
 };
