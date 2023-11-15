@@ -30,34 +30,36 @@ const Contactus: React.FC<ContactUsProps> = ({ colseMethod }) => {
       sx={{ background: workingBlack }}
       color={workingWhite}
     >
-      <Stack width={"80%"} gap={3}>
+      <Stack gap={3}>
+        <CloseIcon
+          sx={{ color: workingWhite, alignSelf: "flex-end" }}
+          onClick={() => {
+            colseMethod();
+          }}
+        />
         <Stack direction={"row"} gap={2}>
           <Image src={logo} alt="" width={50} height={50} />
           <Typography fontSize={Subtitle1}>
             Powerful solutions for your business needs. Let’s Make Wondrful
           </Typography>
-          <CloseIcon
-            sx={{ color: workingWhite }}
-            onClick={() => {
-              colseMethod();
-            }}
-          />
         </Stack>
 
         <TextField
           label="NAME"
           placeholder="NAME"
-          style={{ color: "blue", background: "#7e7d7d" }} // Change the text color to blue
+          style={{ background: "#7e7d7d" }} // Change the text color to blue
         />
         <TextField
           label="EMAIL"
-          style={{ color: "blue", background: "#7e7d7d" }} // Change the text color to blue
+          placeholder="EMAIL"
+          style={{ background: "#7e7d7d" }} // Change the text color to blue
         />
         <TextField
           label="MESSAGE"
+          placeholder="MESSAGE"
           multiline
           rows={8}
-          style={{ color: "blue", background: "#7e7d7d" }} // Change the text color to blue
+          style={{ background: "#7e7d7d" }} // Change the text color to blue
         />
       </Stack>
 

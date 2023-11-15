@@ -48,6 +48,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial="initial"
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <CarouselButton
           arrayLength={demos.length}
@@ -124,6 +125,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial={"initial"}
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <MotionTypography
           color={workingBlack}

@@ -94,6 +94,7 @@ const HeaderBar = () => {
                 onClick={() => {
                   if (each.name === "CONTACT") {
                     setIsContactOpen(true);
+                    setIsOpenDrawr(false);
                   }
                 }}
               >
@@ -128,13 +129,20 @@ const HeaderBar = () => {
         open={isContactOpen}
         onClose={() => setIsContactOpen(false)}
         fullWidth
-        maxWidth={"md"}
       >
         <DialogContent
           sx={{
             background: workingBlack,
+            overflowy: "scroll",
             "&::-webkit-scrollbar": {
-              display: "none",
+              width: "6px", // Width of the scrollbar
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#888", // Color of the scrollbar thumb
+              borderRadius: "6px", // Border radius of the thumb
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: "#eee", // Color of the scrollbar track
             },
           }}
         >

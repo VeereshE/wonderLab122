@@ -55,6 +55,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial="initial"
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <Stack minWidth={"120px"} alignItems={"center"} gap={3}>
           <Typography fontSize={H6_4} fontWeight={700}>
@@ -70,17 +71,23 @@ const Carousel = () => {
                 <Image
                   src={each.normalImage}
                   alt={each.personName}
-                  width={90}
-                  height={90}
+                  width={75}
+                  height={75}
                   key={index}
+                  onClick={() => {
+                    setCurrentSlideNum(index);
+                  }}
                 />
               ) : (
                 <Image
                   src={each.invertedImage}
                   alt={each.personName}
-                  width={90}
-                  height={90}
+                  width={75}
+                  height={75}
                   key={index}
+                  onClick={() => {
+                    setCurrentSlideNum(index);
+                  }}
                 />
               )
             )}
@@ -139,6 +146,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial="initial"
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <MotionTypography
           variant="h4"
@@ -169,6 +177,22 @@ interface slideProps {
   details: string;
 }
 const demos: slideProps[] = [
+  {
+    personImage: personImage1,
+    normalImage: normalImage1,
+    invertedImage: invertedImage1,
+    personName: "Rakesh Hinduja",
+    details:
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut",
+  },
+  {
+    personImage: personImage2,
+    normalImage: normalImage2,
+    invertedImage: invertedImage2,
+    personName: "Saurabh Verma",
+    details:
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut",
+  },
   {
     personImage: personImage1,
     normalImage: normalImage1,

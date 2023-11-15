@@ -39,6 +39,7 @@ const HomePage = () => {
       variants={staggerDiv}
       initial="initial"
       whileInView={"animate"}
+      viewport={{ once: true }}
     >
       <MotionStack
         maxWidth={{

@@ -47,6 +47,9 @@ const Carousel = () => {
         alignItems={"center"}
         mb={4}
         variants={staggerDiv}
+        initial={"initial"}
+        viewport={{ once: true }}
+        whileInView={"animate"}
       >
         <Stack minWidth={"120px"} alignItems={"center"} gap={3}>
           <Typography fontSize={H6_4} fontWeight={700}>
@@ -128,6 +131,9 @@ const Carousel = () => {
         alignItems={{ md: "center" }}
         gap={3}
         variants={staggerDiv}
+        viewport={{ once: true }}
+        whileInView={"animate"}
+        initial={"initial"}
       >
         <Typography variant="h4" fontSize={H4}>
           FOUNDING TEAM

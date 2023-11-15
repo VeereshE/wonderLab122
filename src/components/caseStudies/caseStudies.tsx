@@ -55,6 +55,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial="initial"
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <Stack
           justifyContent={"center"}
@@ -122,6 +123,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial="initial"
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <MotionTypography
           color={workingBlack}

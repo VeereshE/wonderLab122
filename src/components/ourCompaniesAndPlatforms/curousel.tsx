@@ -56,6 +56,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial="initial"
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <Stack direction={"row"} flexGrow={1}>
           <MotionStack
@@ -128,6 +129,7 @@ const Carousel = () => {
         variants={staggerDiv}
         initial="initial"
         whileInView={"animate"}
+        viewport={{ once: true }}
       >
         <MotionTypography
           color={workingBlack}
